@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AKIM.PRO — СРОЧНЫЙ ВЫЕЗД ЭЛЕКТРИКА 24/7</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Manrope:wght@400;800&display=swap');
+        body { background: #000; color: #fff; font-family: 'Manrope', sans-serif; padding-bottom: 90px; }
+        .font-unbounded { font-family: 'Unbounded', sans-serif; }
+        .sw-btn { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; color: #fff; text-decoration: none; border-right: 1px solid #222; gap: 4px; }
+        .active-emergency { background: #ff0000; color: #fff; }
+        .emergency-card { border: 2px solid #ff0000; background: rgba(255, 0, 0, 0.05); padding: 20px; border-radius: 15px; }
+        .pulse-red { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
+    </style>
+</head>
+<body>
 
+    <nav class="p-5 border-b-4 border-red-600 bg-red-950/20 flex justify-between items-center">
+        <b class="text-xl font-unbounded italic text-red-600">AKIM.PRO <span class="text-white">SOS</span></b>
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 bg-red-600 rounded-full animate-ping"></span>
+            <span class="text-[10px] font-bold">LIVE: ТАЛАС</span>
+        </div>
+    </nav>
+
+    <section class="p-10 py-16 text-center">
+        <h1 class="text-6xl font-unbounded italic uppercase leading-none mb-6">НЕТ <br><span class="text-red-600">СВЕТА?</span></h1>
+        <p class="text-xl font-bold uppercase italic text-gray-400">Короткое замыкание? Искрит щиток? Пропала фаза?</p>
+    </section>
+
+    <div class="px-5">
+        <a href="tel:+996755000228" class="block bg-red-600 p-8 text-center text-white font-unbounded text-2xl pulse-red uppercase italic">ВЫЗВАТЬ МАСТЕРА</a>
+    </div>
+
+    <section class="p-5 space-y-4 mt-10">
+        <div class="emergency-card flex items-center gap-4">
+            <i class="fa fa-clock text-3xl text-red-600"></i>
+            <div>
+                <b class="block uppercase">Приезд за 30 минут</b>
+                <span class="text-sm text-gray-400">По городу Талас и ближайшим селам.</span>
+            </div>
+        </div>
+        <div class="emergency-card flex items-center gap-4">
+            <i class="fa fa-microscope text-3xl text-red-600"></i>
+            <div>
+                <b class="block uppercase">Точный поиск</b>
+                <span class="text-sm text-gray-400">Найду обрыв в стене без лишнего долбления.</span>
+            </div>
+        </div>
+        <div class="emergency-card flex items-center gap-4">
+            <i class="fa fa-shield-alt text-3xl text-red-600"></i>
+            <div>
+                <b class="block uppercase">Гарантия результата</b>
+                <span class="text-sm text-gray-400">Исправляю так, чтобы не загорелось снова.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-10 bg-white/5 mx-5 rounded-3xl text-center border border-white/10">
+        <h2 class="text-2xl font-unbounded uppercase mb-6 italic">Прайс на ремонт:</h2>
+        <div class="space-y-4 font-bold italic">
+            <div class="flex justify-between border-b border-white/10 pb-2"><span>Выезд + Диагностика</span><span class="text-red-600">500с</span></div>
+            <div class="flex justify-between border-b border-white/10 pb-2"><span>Устранение КЗ</span><span class="text-red-600">от 1000с</span></div>
+            <div class="flex justify-between border-b border-white/10 pb-2"><span>Замена автомата</span><span class="text-red-600">500с</span></div>
+        </div>
+    </section>
+
+    <section class="p-10 text-center italic opacity-70">
+        <p>Использую профессиональный тестер и тепловизор для обнаружения скрытых проблем.</p>
+    </section>
+
+    <footer class="p-10 text-center opacity-30 text-[10px] uppercase font-bold tracking-widest">
+        © 2026 AKIM.PRO EMERGENCY DIVISION — TALAS
+    </footer>
+
+    <div class="fixed bottom-0 left-0 w-full flex bg-[#0a0a0a] border-t-4 border-red-600 h-[75px] z-[9999]">
+        <a href="/ProTalas/" class="sw-btn active-emergency">
+            <i class="fa fa-bolt text-lg"></i><span>АВАРИЯ</span>
+        </a>
+        <a href="/ProTalas/Про/" class="sw-btn">
+            <i class="fa fa-hard-hat text-lg"></i><span>ПРОРАБ</span>
+        </a>
+        <a href="/ProTalas/нанимать/" class="sw-btn">
+            <i class="fa fa-user-plus text-lg"></i><span>НАЙМ</span>
+        </a>
+    </div>
+
+</body>
+</html>
