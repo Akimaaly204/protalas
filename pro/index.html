@@ -3,52 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKIM.PRO — ПРОРАБ (B2B)</title>
+    <title>AKIM.PRO — Надежный электромонтаж для Вашего объекта</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Manrope:wght@400;800&display=swap');
-        body { background: #000; color: #fff; font-family: 'Manrope', sans-serif; padding-bottom: 90px; }
-        .sw-btn { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; color: #fff; text-decoration: none; border-right: 1px solid #222; gap: 4px; }
-        .active-pro { background: #2563eb; color: #fff; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        :root { --bg: #0a0a0a; --card: #141414; --accent: #38bdf8; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #f8fafc; scroll-behavior: smooth; }
+        .glass-card { background: var(--card); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s ease; }
+        .glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+        .reveal { visibility: hidden; }
+        .line-accent { height: 2px; width: 50px; background: var(--accent); }
     </style>
 </head>
 <body>
-    <nav class="p-5 border-b-4 border-blue-600 bg-blue-950/20 flex justify-between items-center italic">
-        <b class="text-xl">AKIM.PRO <span class="text-blue-600 font-black">INDUSTRIAL</span></b>
-        <span class="text-[10px] bg-blue-600 px-2 py-1 font-bold">B2B</span>
-    </nav>
 
-    <section class="p-10 py-20 bg-gradient-to-b from-blue-900/10 to-transparent">
-        <h1 class="text-5xl font-black uppercase leading-none mb-6 italic">Инженерный <br><span class="text-blue-600 text-6xl">монтаж</span></h1>
-        <p class="text-gray-400 text-lg border-l-4 border-blue-600 pl-4 font-bold italic uppercase">Субподряд в Таласе. Работаем строго по чертежам и СНиП.</p>
+    <header class="fixed top-0 w-full z-[1000] bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/5 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-sky-500 rounded flex items-center justify-center"><i class="fas fa-bolt text-black"></i></div>
+            <span class="font-bold tracking-tighter text-xl uppercase text-white">AKIM.PRO <span class="text-sky-500 italic">PRO</span></span>
+        </div>
+        <a href="tel:+996755000228" class="text-xs font-black bg-sky-500 text-black px-6 py-2 rounded-lg hover:scale-105 transition-all">ВЫЗВАТЬ МАСТЕРА</a>
+    </header>
+
+    <section class="min-h-screen flex flex-col justify-center px-6 pt-20 max-w-6xl mx-auto">
+        <div class="reveal line-accent mb-6"></div>
+        <h1 class="reveal text-5xl md:text-8xl font-extrabold uppercase leading-none mb-8">ПАРТНЕР <br> ДЛЯ <span class="text-sky-500">ПРОРАБА</span></h1>
+        <p class="reveal text-slate-400 text-xl md:text-2xl leading-relaxed mb-10 max-w-2xl italic">
+            Я не просто «тяну провода». Я закрываю вопрос электрики на вашем объекте полностью — от закупа до сдачи.
+        </p>
+        <div class="reveal flex flex-wrap gap-4">
+            <a href="https://wa.me/996755000228" class="bg-sky-500 text-black px-10 py-5 rounded-xl font-black uppercase text-xs tracking-widest hover:shadow-[0_0_30px_rgba(56,189,248,0.4)]">Обсудить проект</a>
+        </div>
     </section>
 
-    <div class="px-5"><a href="tel:+996755000228" class="block bg-blue-600 p-8 text-center text-black font-black text-2xl uppercase italic">ОБСУДИТЬ ОБЪЕКТ</a></div>
-
-    <section class="p-8 bg-blue-600 text-black mt-10">
-        <h2 class="text-3xl font-black uppercase mb-4 italic">Наш арсенал:</h2>
-        <p class="font-bold italic text-xl uppercase">Hilti / Milwaukee / Bosch. Штробим с пылесосом. Сверлим коронками. Делаем чисто.</p>
+    <section class="py-24 px-6 bg-[#0f0f0f]">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="reveal text-3xl font-black uppercase italic mb-16 border-l-4 border-sky-500 pl-6 text-white">Мои железные правила</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="reveal glass-card p-10 rounded-3xl">
+                    <i class="fas fa-ban text-sky-500 text-3xl mb-6"></i>
+                    <h4 class="font-bold text-lg mb-4 uppercase text-white">Никакого алкоголя</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed italic">Трезвый ум и дисциплина на объекте — это закон. Я ценю вашу репутацию перед заказчиком.</p>
+                </div>
+                <div class="reveal glass-card p-10 rounded-3xl">
+                    <i class="fas fa-scroll text-sky-500 text-3xl mb-6"></i>
+                    <h4 class="font-bold text-lg mb-4 uppercase text-white">Строго по ПУЭ</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed italic">Работаю по нормам. Никаких «скруток» и экономии на безопасности. Только пайка или обжим.</p>
+                </div>
+                <div class="reveal glass-card p-10 rounded-3xl">
+                    <i class="fas fa-handshake text-sky-500 text-3xl mb-6"></i>
+                    <h4 class="font-bold text-lg mb-4 uppercase text-white">Всегда на связи</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed italic">Я не пропадаю. Прораб всегда знает, на каком этапе работа и когда будет готов следующий узел.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="p-5 space-y-4">
-        <div class="p-4 border-l-4 border-blue-600 bg-white/5 italic"><b>Монтаж ГРЩ и ВРУ</b></div>
-        <div class="p-4 border-l-4 border-blue-600 bg-white/5 italic"><b>Кабельные трассы (лотки)</b></div>
-        <div class="p-4 border-l-4 border-blue-600 bg-white/5 italic"><b>Освещение складов и ТЦ</b></div>
+    <section class="py-24 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="reveal flex-1">
+                <h2 class="text-4xl font-black uppercase italic mb-8 text-white text-shadow">Арсенал <br>профессионала</h2>
+                <p class="text-slate-400 mb-8 italic uppercase text-sm leading-loose">
+                    Я прихожу на объект со своим инструментом Bosch, Makita и Fluke. <br>
+                    Штробление с пылесосом — минимум пыли. <br>
+                    Лазерная разметка — идеальная точность розеток. <br>
+                    Проверка линий мегомметром перед сдачей.
+                </p>
+                <div class="flex gap-4 opacity-50">
+                    <i class="fas fa-tools text-2xl"></i><i class="fas fa-microchip text-2xl"></i><i class="fas fa-bolt text-2xl"></i>
+                </div>
+            </div>
+            <div class="reveal flex-1 w-full">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=600" class="rounded-[40px] grayscale hover:grayscale-0 transition-all duration-700 border border-white/5 shadow-2xl">
+            </div>
+        </div>
     </section>
 
-    <footer class="p-10 text-center opacity-30 text-[10px] uppercase">Akim.pro Industrial — 2026</footer>
+    <section class="py-24 px-6 bg-sky-500/5 border-y border-white/5">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="reveal text-3xl font-black uppercase mb-8 italic text-white">Берегу Ваши деньги</h2>
+            <p class="reveal text-slate-400 italic mb-12 uppercase text-xs tracking-widest leading-relaxed">
+                Я знаю, где купить кабель и автоматы дешевле без потери качества. Грамотный расчет трасс позволяет сэкономить до 20% материала на крупных объектах.
+            </p>
+            <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-6 glass-card rounded-2xl"><div class="text-sky-500 font-black">Сметы</div></div>
+                <div class="p-6 glass-card rounded-2xl"><div class="text-sky-500 font-black">Закупки</div></div>
+                <div class="p-6 glass-card rounded-2xl"><div class="text-sky-500 font-black">Логистика</div></div>
+                <div class="p-6 glass-card rounded-2xl"><div class="text-sky-500 font-black">Проекты</div></div>
+            </div>
+        </div>
+    </section>
 
-    <div class="fixed bottom-0 left-0 w-full flex bg-[#111] border-t-4 border-blue-600 h-[75px] z-[9999]">
-        <a href="/ProTalas/" class="sw-btn">
-            <i class="fa fa-bolt text-lg"></i><span>АВАРИЯ</span>
-        </a>
-        <a href="/ProTalas/Про/" class="sw-btn active-pro">
-            <i class="fa fa-hard-hat text-lg"></i><span>ПРОРАБ</span>
-        </a>
-        <a href="/ProTalas/нанимать/" class="sw-btn">
-            <i class="fa fa-user-plus text-lg"></i><span>НАЙМ</span>
-        </a>
-    </div>
+    <section class="py-24 px-6 max-w-6xl mx-auto">
+        <h2 class="reveal text-center text-4xl font-black uppercase italic mb-16 text-white italic">Объекты в работе</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="reveal glass-card rounded-3xl overflow-hidden h-80 relative group">
+                <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=600" class="w-full h-full object-cover grayscale transition-all group-hover:grayscale-0">
+                <div class="absolute inset-0 bg-black/60 p-6 flex items-end"><p class="font-bold uppercase text-xs italic">Торговые центры</p></div>
+            </div>
+            <div class="reveal glass-card rounded-3xl overflow-hidden h-80 relative group">
+                <img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=600" class="w-full h-full object-cover grayscale transition-all group-hover:grayscale-0">
+                <div class="absolute inset-0 bg-black/60 p-6 flex items-end"><p class="font-bold uppercase text-xs italic">Элитные коттеджи</p></div>
+            </div>
+            <div class="reveal glass-card rounded-3xl overflow-hidden h-80 relative group">
+                <img src="https://images.unsplash.com/photo-1565008480292-2262202ca7ad?auto=format&fit=crop&w=600" class="w-full h-full object-cover grayscale transition-all group-hover:grayscale-0">
+                <div class="absolute inset-0 bg-black/60 p-6 flex items-end"><p class="font-bold uppercase text-xs italic">Офисные здания</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 px-6 text-center">
+        <div class="reveal max-w-4xl mx-auto glass-card p-16 md:p-24 rounded-[60px] border-sky-500/30">
+            <h2 class="text-4xl md:text-6xl font-black mb-8 italic uppercase leading-tight text-white">Давайте работать вместе</h2>
+            <p class="text-slate-500 mb-12 text-lg italic uppercase tracking-widest">Прораб должен заниматься стройкой, а не бегать за электриком. <br>Я возьму электромонтаж на себя.</p>
+            <div class="flex flex-col md:flex-row justify-center gap-6">
+                <a href="https://wa.me/996755000228" class="bg-sky-500 text-black px-12 py-6 rounded-2xl font-black uppercase text-sm tracking-[0.2em] shadow-[0_20px_40px_rgba(56,189,248,0.2)]">Обсудить партнерство</a>
+            </div>
+            <div class="mt-16 flex justify-center gap-8">
+                <a href="https://instagram.com/ta07as.a" class="text-3xl text-slate-700 hover:text-sky-500 transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="https://t.me/ta07as" class="text-3xl text-slate-700 hover:text-sky-500 transition-colors"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-[10px] font-bold text-white/5 tracking-[2em] uppercase">
+        AKIM PROFESSIONAL • 2026
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            ScrollReveal().reveal('.reveal', {
+                delay: 200, distance: '40px', origin: 'bottom', duration: 1000, interval: 150, cleanup: true
+            });
+        });
+    </script>
 </body>
 </html>
