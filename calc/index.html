@@ -3,98 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKIM.PRO — Smart Calc</title>
+    <title>AKIM.PRO — Смета</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { font-family: sans-serif; background: #050505; color: white; padding-bottom: 120px; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #050505; color: white; padding-bottom: 140px; }
         .category-btn { background: #111; border: 1px solid #222; }
         .hidden-content { display: none; }
         .active-content { display: block; }
-        input[type="number"] { background: #1a1a1a; border: 1px solid #333; color: #3b82f6; width: 60px; text-align: center; border-radius: 8px; }
+        
+        .price-edit-box { display: none; }
+        .editing .price-edit-box { display: inline-block; }
+        .editing .price-display { display: none; }
+
+        .price-input { 
+            background: #222; border: 1px solid #fbbf24; color: #fbbf24; 
+            width: 65px; text-align: center; border-radius: 4px; font-size: 12px; outline: none;
+        }
+        
+        .count-input { 
+            background: #1a1a1a; border: 1px solid #333; color: #3b82f6; 
+            width: 65px; text-align: center; border-radius: 12px; 
+            font-weight: bold; font-size: 18px; height: 48px;
+        }
+
+        #preview-modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 100; padding: 20px; overflow-y: auto;
+        }
+
+        #photo-receipt { 
+            background: white; color: black; padding: 40px; width: 500px; 
+            position: fixed; left: -9999px; top: 0;
+        }
+        .receipt-header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
     </style>
 </head>
-<body class="p-4">
-    <div class="max-w-md mx-auto">
-        <h1 class="text-xl font-black text-blue-500 mb-6 uppercase italic">Системный расчет</h1>
-        
-        <div id="calculator-container"></div>
+<body class="p-4 text-gray-100">
 
-        <button onclick="sendToWhatsApp()" class="w-full bg-green-600 p-4 rounded-2xl font-bold uppercase mt-6">
-            <i class="fab fa-whatsapp mr-2"></i> Отправить смету
+    <div class="max-w-md mx-auto" id="main-app">
+        <!-- Шапка -->
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h1 class="text-2xl font-black text-blue-500 uppercase italic leading-none">AKIM.PRO</h1>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Электромонтаж Талас</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="toggleEditMode()" id="settings-btn" class="bg-white/5 w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 text-gray-400">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button onclick="window.location.reload()" class="bg-white/5 w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 text-gray-400">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Поле для Имени клиента -->
+        <div class="mb-6">
+            <input type="text" id="client-name" placeholder="Имя клиента / Объект (напр. Марат, ул. Ленина)" 
+                class="w-full bg-[#111] border border-white/10 rounded-xl p-4 text-sm focus:border-blue-500 outline-none transition-all"
+                oninput="updateReceiptData()">
+        </div>
+        
+        <div id="calculator-container" class="space-y-3"></div>
+
+        <div class="space-y-3 mt-8">
+            <button onclick="showPreview()" class="w-full bg-blue-600/20 border border-blue-500 text-blue-400 h-14 rounded-2xl font-bold uppercase flex items-center justify-center active:scale-95 transition">
+                <i class="fas fa-eye mr-2"></i> Предпросмотр сметы
+            </button>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="downloadReceipt()" class="bg-white text-black h-14 rounded-2xl font-black uppercase flex items-center justify-center text-sm">
+                    <i class="fas fa-camera mr-2"></i> Фото
+                </button>
+                <button onclick="sendToWhatsApp()" class="bg-green-600 text-white h-14 rounded-2xl font-black uppercase flex items-center justify-center text-sm">
+                    <i class="fab fa-whatsapp mr-2 text-lg"></i> WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно предпросмотра -->
+    <div id="preview-modal">
+        <div class="max-w-md mx-auto bg-white text-black rounded-3xl p-6 shadow-2xl relative">
+            <button onclick="closePreview()" class="absolute top-4 right-4 text-gray-400 hover:text-black">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-black italic text-blue-600 leading-none">AKIM.PRO</h2>
+                <p id="preview-client-display" class="text-[11px] font-bold uppercase mt-2 text-gray-800 bg-gray-100 py-1 px-3 rounded-full inline-block"></p>
+            </div>
+
+            <div id="preview-content" class="space-y-4 max-h-[50vh] overflow-y-auto mb-6 border-y border-gray-100 py-4"></div>
+
+            <div class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl mb-6">
+                <span class="font-bold text-gray-500 uppercase text-xs tracking-widest">Итого:</span>
+                <span class="text-2xl font-black text-blue-600"><span id="preview-total">0</span> сом</span>
+            </div>
+
+            <div class="space-y-2">
+                <button onclick="downloadReceipt(); closePreview();" class="w-full bg-black text-white p-4 rounded-xl font-bold uppercase text-xs">Скачать фото</button>
+                <button onclick="sendToWhatsApp(); closePreview();" class="w-full bg-green-600 text-white p-4 rounded-xl font-bold uppercase text-xs">В WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Панель ИТОГО -->
+    <div class="fixed bottom-0 left-0 right-0 p-6 bg-blue-700 flex justify-between items-center rounded-t-[32px] shadow-2xl z-50">
+        <div>
+            <p class="text-[10px] uppercase font-black opacity-70">Сумма заказа</p>
+            <div class="text-4xl font-black italic tracking-tighter"><span id="total">0</span> <span class="text-xl opacity-60">сом</span></div>
+        </div>
+        <button onclick="showPreview()" class="bg-white/20 p-4 rounded-2xl">
+            <i class="fas fa-file-invoice text-2xl text-white"></i>
         </button>
     </div>
 
-    <div class="fixed bottom-0 left-0 right-0 p-6 bg-blue-600 flex justify-between items-center rounded-t-3xl">
-        <div>
-            <p class="text-xs uppercase opacity-80">Итого:</p>
-            <div class="text-3xl font-black"><span id="total">0</span> сом</div>
+    <!-- Скрытый макет для PNG -->
+    <div id="photo-receipt">
+        <div class="receipt-header text-center">
+            <h2 style="font-size: 32px; font-weight: 900; margin: 0;">AKIM.PRO</h2>
+            <p style="font-size: 14px; margin: 0; color: #555; text-transform: uppercase; letter-spacing: 2px;">Электромонтажные работы</p>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <p style="font-size: 14px; margin: 0; font-weight: bold;">ЗАКАЗЧИК: <span id="receipt-client-name">Не указан</span></p>
+            <p style="font-size: 11px; color: #777;">Дата: <span id="receipt-date"></span></p>
+        </div>
+        <div id="receipt-items"></div>
+        <div style="margin-top: 25px; padding: 20px; background: #000; color: #fff; display: flex; justify-content: space-between; align-items: center; border-radius: 10px;">
+            <span style="font-size: 18px; font-weight: 700;">ИТОГО К ОПЛАТЕ:</span>
+            <span style="font-size: 26px; font-weight: 900;"><span id="receipt-total">0</span> СОМ</span>
+        </div>
+        <div style="margin-top: 30px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 20px;">
+            <p style="font-weight: bold; color: #000; margin-bottom: 4px;">Мастер: Аким | +996755000228</p>
+            <p>Талас и Таласская область</p>
         </div>
     </div>
 
     <script src="data/prices.js"></script>
 
     <script>
-        // Функция для отрисовки калькулятора из файла prices.js
+        let isEditMode = false;
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const app = document.getElementById('main-app');
+            const btn = document.getElementById('settings-btn');
+            app.classList.toggle('editing', isEditMode);
+            btn.classList.toggle('bg-yellow-500', isEditMode);
+            btn.classList.toggle('text-black', isEditMode);
+        }
+
+        function updateReceiptData() {
+            const name = document.getElementById('client-name').value || "Не указан";
+            document.getElementById('receipt-client-name').innerText = name;
+            document.getElementById('preview-client-display').innerText = "Заказчик: " + name;
+            document.getElementById('receipt-date').innerText = new Date().toLocaleDateString();
+        }
+
         function renderCalc() {
             const container = document.getElementById('calculator-container');
-            if (typeof serviceCategories === 'undefined') {
-                container.innerHTML = "<p class='text-red-500 text-center'>Ошибка: Библиотека prices.js не найдена или содержит ошибку!</p>";
-                return;
-            }
+            if (typeof serviceCategories === 'undefined') return;
+            updateReceiptData();
 
             serviceCategories.forEach((cat, catIdx) => {
                 let html = `
-                    <div class="mb-4">
-                        <button onclick="toggle('cat-${catIdx}')" class="category-btn w-full p-4 rounded-2xl flex justify-between items-center font-bold text-sm uppercase">
+                    <div class="mb-2">
+                        <button onclick="toggle('cat-${catIdx}')" class="category-btn w-full p-4 rounded-2xl flex justify-between items-center font-black text-[11px] uppercase tracking-wider">
                             <span>${cat.name}</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
+                            <i class="fas fa-chevron-down text-[10px] opacity-30"></i>
                         </button>
-                        <div id="cat-${catIdx}" class="hidden-content px-2 py-4 space-y-4">
+                        <div id="cat-${catIdx}" class="hidden-content mt-1 bg-[#0a0a0a] rounded-2xl border border-white/5 p-4 space-y-5">
                 `;
-
-                cat.items.forEach((item) => {
+                cat.items.forEach((item, itemIdx) => {
                     html += `
-                        <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                            <span class="text-[11px] uppercase">${item.name} <br><small class="text-gray-500">${item.price} сом / ${item.unit}</small></span>
-                            <input type="number" class="calc-val" data-price="${item.price}" data-name="${item.name}" value="0" oninput="calculate()">
+                        <div class="flex justify-between items-center gap-3 border-b border-white/5 pb-4">
+                            <div class="flex-1">
+                                <div class="text-[11px] font-bold uppercase text-gray-300 leading-tight">${item.name}</div>
+                                <div class="mt-2 text-[10px] uppercase font-bold text-gray-500">
+                                    Цена: 
+                                    <span class="price-display text-blue-400" id="display-p-${catIdx}-${itemIdx}">${item.price}</span>
+                                    <span class="price-edit-box">
+                                        <input type="number" value="${item.price}" class="price-input" id="p-${catIdx}-${itemIdx}" oninput="calculate()">
+                                    </span>
+                                    сом / ${item.unit}
+                                </div>
+                            </div>
+                            <input type="number" class="count-input" placeholder="0" id="c-${catIdx}-${itemIdx}" oninput="calculate()">
                         </div>
                     `;
                 });
-
                 html += `</div></div>`;
                 container.innerHTML += html;
             });
         }
 
-        function toggle(id) {
-            document.getElementById(id).classList.toggle('active-content');
-        }
+        function toggle(id) { document.getElementById(id).classList.toggle('active-content'); }
 
         function calculate() {
             let total = 0;
-            document.querySelectorAll('.calc-val').forEach(input => {
-                total += (parseInt(input.value) || 0) * parseInt(input.dataset.price);
+            serviceCategories.forEach((cat, catIdx) => {
+                cat.items.forEach((item, itemIdx) => {
+                    const price = parseFloat(document.getElementById(`p-${catIdx}-${itemIdx}`).value) || 0;
+                    const count = parseFloat(document.getElementById(`c-${catIdx}-${itemIdx}`).value) || 0;
+                    document.getElementById(`display-p-${catIdx}-${itemIdx}`).innerText = price;
+                    total += price * count;
+                });
             });
-            document.getElementById('total').innerText = total;
+            const formatted = total.toLocaleString();
+            document.getElementById('total').innerText = formatted;
+            document.getElementById('preview-total').innerText = formatted;
+            document.getElementById('receipt-total').innerText = formatted;
+        }
+
+        function showPreview() {
+            const previewContent = document.getElementById('preview-content');
+            previewContent.innerHTML = '';
+            let hasItems = false;
+            updateReceiptData();
+
+            serviceCategories.forEach((cat, catIdx) => {
+                cat.items.forEach((item, itemIdx) => {
+                    const price = parseFloat(document.getElementById(`p-${catIdx}-${itemIdx}`).value) || 0;
+                    const count = parseFloat(document.getElementById(`c-${catIdx}-${itemIdx}`).value) || 0;
+                    if (count > 0) {
+                        hasItems = true;
+                        previewContent.innerHTML += `
+                            <div class="flex justify-between items-start text-sm">
+                                <div class="pr-4">
+                                    <p class="font-bold uppercase text-xs">${item.name}</p>
+                                    <p class="text-[10px] text-gray-400 italic">${count} ${item.unit} x ${price} сом</p>
+                                </div>
+                                <div class="font-black text-blue-600">${(price * count).toLocaleString()} сом</div>
+                            </div>
+                        `;
+                    }
+                });
+            });
+            if (!hasItems) return alert("Введите количество работ!");
+            document.getElementById('preview-modal').style.display = 'block';
+        }
+
+        function closePreview() { document.getElementById('preview-modal').style.display = 'none'; }
+
+        async function downloadReceipt() {
+            updateReceiptData();
+            const receiptItems = document.getElementById('receipt-items');
+            receiptItems.innerHTML = '';
+            serviceCategories.forEach((cat, catIdx) => {
+                cat.items.forEach((item, itemIdx) => {
+                    const price = parseFloat(document.getElementById(`p-${catIdx}-${itemIdx}`).value) || 0;
+                    const count = parseFloat(document.getElementById(`c-${catIdx}-${itemIdx}`).value) || 0;
+                    if (count > 0) {
+                        receiptItems.innerHTML += `
+                            <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee;">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">${item.name}</div>
+                                    <div style="font-size: 10px; color: #666;">${count} ${item.unit} x ${price} сом</div>
+                                </div>
+                                <div style="font-weight: 900; font-size: 14px;">${(price * count).toLocaleString()} сом</div>
+                            </div>
+                        `;
+                    }
+                });
+            });
+            const receipt = document.getElementById('photo-receipt');
+            const canvas = await html2canvas(receipt, { scale: 2 });
+            const link = document.createElement('a');
+            link.download = `Смета_${document.getElementById('client-name').value || 'AKIM_PRO'}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
         }
 
         function sendToWhatsApp() {
+            const name = document.getElementById('client-name').value || "Не указан";
             const total = document.getElementById('total').innerText;
-            let text = "🏠 *Смета на электромонтаж (AKIM.PRO)*\n\n";
-            
-            document.querySelectorAll('.calc-val').forEach(input => {
-                if (parseInt(input.value) > 0) {
-                    text += `▪️ ${input.dataset.name}: ${input.value} ед. — ${parseInt(input.value) * parseInt(input.dataset.price)} сом\n`;
-                }
+            let text = `🏠 *AKIM.PRO — Смета*\n👤 *Заказчик:* ${name}\n\n`;
+            serviceCategories.forEach((cat, catIdx) => {
+                let catText = "";
+                cat.items.forEach((item, itemIdx) => {
+                    const price = parseFloat(document.getElementById(`p-${catIdx}-${itemIdx}`).value) || 0;
+                    const count = parseFloat(document.getElementById(`c-${catIdx}-${itemIdx}`).value) || 0;
+                    if (count > 0) catText += `▪️ ${item.name}: ${count} ${item.unit} x ${price} = *${price * count}* сом\n`;
+                });
+                if (catText) text += `*${cat.name.toUpperCase()}*\n${catText}\n`;
             });
-
-            text += `\n*ИТОГО: ${total} сом*\n\nКонтакт: +996755000228`;
+            text += `💰 *ИТОГО: ${total} СОМ*\n\n📞 Мастер: +996755000228`;
             window.location.href = `https://wa.me/996755000228?text=${encodeURIComponent(text)}`;
         }
-
-        // Запускаем отрисовку при загрузке
         window.onload = renderCalc;
     </script>
 </body>
 </html>
+
