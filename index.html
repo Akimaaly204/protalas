@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭЛЕКТРИК ТАЛАС — Срочный выезд 24/7</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        :root { --red: #ff0000; --dark: #050505; }
+        body { background-color: var(--dark); color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .red-border { border: 1px solid rgba(255, 0, 0, 0.2); }
+        .pulse-btn { animation: pulse 1.5s infinite; background: var(--red); }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        .lang-switch { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 8px; }
+        .lang-btn { background: rgba(0,0,0,0.8); border: 2px solid #ff0000; color: white; padding: 12px 18px; border-radius: 14px; font-weight: 900; font-size: 14px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .lang-btn.active { background: #ff0000; box-shadow: 0 0 15px rgba(255,0,0,0.4); }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switch">
+        <button onclick="setLang('ru')" id="btn-ru" class="lang-btn active">РУС</button>
+        <button onclick="setLang('kg')" id="btn-kg" class="lang-btn">КЫР</button>
+    </div>
+
+    <section class="h-screen flex flex-col items-center justify-center text-center px-4 border-b border-red-900/20">
+        <div id="badge" class="bg-red-600 px-4 py-1 rounded text-[10px] font-black mb-4 uppercase tracking-widest">Талас и область</div>
+        <h1 id="main-title" class="text-6xl md:text-9xl font-black italic uppercase leading-none mb-6 text-red-600">ВЫЗВАТЬ <br> <span class="text-white">ЭЛЕКТРИКА</span></h1>
+        <p id="main-desc" class="text-gray-400 text-lg mb-10 max-w-lg font-bold">Срочное устранение замыканий. Приеду через 30 минут!</p>
+        <a href="tel:+996755000228" id="call-btn-text" class="pulse-btn w-full max-w-sm py-8 rounded-2xl text-3xl font-black uppercase tracking-tighter text-center">ПОЗВОНИТЬ</a>
+        <p class="mt-6 text-3xl font-black">+996 755 000 228</p>
+    </section>
+
+    <section class="py-20 px-6 border-b border-white/5">
+        <div class="max-w-4xl mx-auto flex items-start gap-6">
+            <span class="text-6xl font-black text-red-600 opacity-20 italic">01</span>
+            <div>
+                <h3 id="s1-t" class="text-2xl font-black uppercase italic mb-3">Профессиональный опыт</h3>
+                <p id="s1-d" class="text-gray-400">Работаю с любыми типами электросетей. Знаю все особенности старых и новых домов в Таласе.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 border-b border-white/5 bg-zinc-950">
+        <div class="max-w-4xl mx-auto flex items-start gap-6">
+            <span class="text-6xl font-black text-red-600 opacity-20 italic">02</span>
+            <div>
+                <h3 id="s2-t" class="text-2xl font-black uppercase italic mb-3">Современное оборудование</h3>
+                <p id="s2-d" class="text-gray-400">Использую профессиональные детекторы для поиска скрытой проводки и замыканий без разрушения стен.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 border-b border-white/5">
+        <div class="max-w-4xl mx-auto flex items-start gap-6">
+            <span class="text-6xl font-black text-red-600 opacity-20 italic">03</span>
+            <div>
+                <h3 id="s3-t" class="text-2xl font-black uppercase italic mb-3">Оперативность 24/7</h3>
+                <p id="s3-d" class="text-gray-400">Понимаю, что электричество не ждет. Готов к выезду даже ночью в выходные и праздники.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 bg-red-600 text-black">
+        <div class="max-w-4xl mx-auto">
+            <h2 id="gar-t" class="text-4xl font-black uppercase italic mb-4">ГАРАНТИЯ БЕЗОПАСНОСТИ</h2>
+            <p id="gar-d" class="font-bold text-xl leading-snug">Ваш дом будет под защитой. Работаю только с качественными материалами, соответствующими ГОСТу.</p>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 border-b border-white/5">
+        <div class="max-w-4xl mx-auto">
+            <h3 id="help-t" class="text-2xl font-black uppercase italic mb-6 text-center">Срочная помощь при:</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 font-bold uppercase text-sm">
+                <li class="red-border p-4 rounded-xl"><i class="fas fa-check text-red-600 mr-2"></i> <span id="l1">Запах гари в щитке</span></li>
+                <li class="red-border p-4 rounded-xl"><i class="fas fa-check text-red-600 mr-2"></i> <span id="l2">Искрение розеток</span></li>
+                <li class="red-border p-4 rounded-xl"><i class="fas fa-check text-red-600 mr-2"></i> <span id="l3">Пропал свет в доме</span></li>
+                <li class="red-border p-4 rounded-xl"><i class="fas fa-check text-red-600 mr-2"></i> <span id="l4">Выбивает автоматы</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="py-16 px-6 bg-black text-center border-t border-red-900/20">
+        <div class="flex justify-center gap-12 mb-10">
+            <a href="https://wa.me/996755000228" class="text-4xl text-green-500"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://instagram.com/ta07as.a" class="text-4xl text-pink-600"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/ta07as" class="text-4xl text-blue-500"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+        <p class="text-[9px] text-gray-700 font-black tracking-[1.5em] uppercase">AKIM PROFESSIONAL • TALAS • 2026</p>
+    </footer>
+
+    <script>
+        function setLang(lang) {
+            const elements = {
+                badge: document.getElementById('badge'),
+                title: document.getElementById('main-title'),
+                desc: document.getElementById('main-desc'),
+                call: document.getElementById('call-btn-text'),
+                s1t: document.getElementById('s1-t'), s1d: document.getElementById('s1-d'),
+                s2t: document.getElementById('s2-t'), s2d: document.getElementById('s2-d'),
+                s3t: document.getElementById('s3-t'), s3d: document.getElementById('s3-d'),
+                gart: document.getElementById('gar-t'), gard: document.getElementById('gar-d'),
+                helpt: document.getElementById('help-t'),
+                l1: document.getElementById('l1'), l2: document.getElementById('l2'),
+                l3: document.getElementById('l3'), l4: document.getElementById('l4')
+            };
+
+            if (lang === 'kg') {
+                elements.badge.innerText = "Талас жана облусу";
+                elements.title.innerHTML = 'ЭЛЕКТРИКТИ <br> <span class="text-white">ЧАКЫРУУ</span>';
+                elements.desc.innerText = "Кыска туташууну тез арада жок кылуу. 30 мүнөттө жетип келем!";
+                elements.call.innerText = "ЧАЛУУ";
+                elements.s1t.innerText = "Көп жылдык тажрыйба";
+                elements.s1d.innerText = "Электр тармактарынын бардык түрлөрү менен иштейм. Таластагы эски жана жаңы үйлөрдүн өзгөчөлүктөрүн билем.";
+                elements.s2t.innerText = "Заманбап жабдуулар";
+                elements.s2d.innerText = "Дубалдарды бузбай, жашыруун зымдарды жана кыска туташууларды издөө үчүн кесипкөй детекторлорду колдоном.";
+                elements.s3t.innerText = "Ыкчамдык 24/7";
+                elements.s3d.innerText = "Электр энергиясы күтпөйт. Түн ичинде, дем алыш жана майрам күндөрү да келүүгө даярмын.";
+                elements.gart.innerText = "КООПСУЗДУК КЕПИЛДИГИ";
+                elements.gard.innerText = "Үйүңүз коргоо астында болот. ГОСТко жооп берген сапаттуу материалдар менен гана иштейм.";
+                elements.helpt.innerText = "Тез жардам керек болсо:";
+                elements.l1.innerText = "Щиттен күйүк жыты чыкса";
+                elements.l2.innerText = "Розеткалар учкундаса";
+                elements.l3.innerText = "Үйдө свет өчсө";
+                elements.l4.innerText = "Автоматтар атылып кетсе";
+                document.getElementById('btn-kg').classList.add('active');
+                document.getElementById('btn-ru').classList.remove('active');
+            } else {
+                location.reload(); // Просто перезагружаем для возврата русского
+            }
+        }
+    </script>
+</body>
+                  </html>
+                  
